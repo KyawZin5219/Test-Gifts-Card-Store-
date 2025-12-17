@@ -1175,20 +1175,76 @@ async def menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [InlineKeyboardButton("🔙 Back", callback_data='shop_main')]
         ]
         await query.edit_message_text("Steam Wallet Region ရွေးချယ်ပါ:", reply_markup=InlineKeyboardMarkup(keyboard))
+    # --- MISSING CATEGORIES (ဒီကောင်တွေ ကျန်နေလို့ပါ) ---
+    
+    if data == 'apple_main':
+        keyboard = [
+            [InlineKeyboardButton("🇺🇸 US Region", callback_data='apple.us')],
+            [InlineKeyboardButton("🇸🇬 SG Region", callback_data='apple.sg')],
+            [InlineKeyboardButton("🇹🇷 Turkey Region", callback_data='apple.tr')],
+            [InlineKeyboardButton("🔙 Back", callback_data='shop_main')]
+        ]
+        await query.edit_message_text("Apple Gift Card Region ရွေးချယ်ပါ:", reply_markup=InlineKeyboardMarkup(keyboard))
+
+    elif data == 'psn_main':
+        keyboard = [
+            [InlineKeyboardButton("🇺🇸 US Region", callback_data='psn.us')],
+            [InlineKeyboardButton("🇸🇬 SG Region", callback_data='psn.sg')],
+            [InlineKeyboardButton("🔙 Back", callback_data='shop_main')]
+        ]
+        await query.edit_message_text("PSN Gift Card Region ရွေးချယ်ပါ:", reply_markup=InlineKeyboardMarkup(keyboard))
+        
+    elif data == 'nintendo_main':
+        keyboard = [
+            [InlineKeyboardButton("🇺🇸 US Region", callback_data='nintendo.us')],
+            [InlineKeyboardButton("🇯🇵 Japan Region", callback_data='nintendo.jp')],
+            [InlineKeyboardButton("🇸🇬 SG Region", callback_data='nintendo.sg')],
+            [InlineKeyboardButton("🇬🇧 UK Region", callback_data='nintendo.uk')],
+            [InlineKeyboardButton("🔙 Back", callback_data='shop_main')]
+        ]
+        await query.edit_message_text("Nintendo eShop Region ရွေးချယ်ပါ:", reply_markup=InlineKeyboardMarkup(keyboard))
+
+    elif data == 'roblox_main':
+        keyboard = [
+            [InlineKeyboardButton("🇺🇸 US Region", callback_data='roblox.us')],
+            [InlineKeyboardButton("🔙 Back", callback_data='shop_main')]
+        ]
+        await query.edit_message_text("Roblox Gift Card Region ရွေးချယ်ပါ:", reply_markup=InlineKeyboardMarkup(keyboard))
+
+    elif data == 'visa_main':
+        keyboard = [[InlineKeyboardButton("🇺🇸 US Region", callback_data='visa.us')],
+                    [InlineKeyboardButton("🔙 Back", callback_data='shop_main')]]
+        await query.edit_message_text("Visa Region ရွေးချယ်ပါ:", reply_markup=InlineKeyboardMarkup(keyboard))
+
+    elif data == 'mastercard_main':
+        keyboard = [[InlineKeyboardButton("🇺🇸 US Region", callback_data='mastercard.us')],
+                    [InlineKeyboardButton("🔙 Back", callback_data='shop_main')]]
+        await query.edit_message_text("Mastercard Region ရွေးချယ်ပါ:", reply_markup=InlineKeyboardMarkup(keyboard))
+
+    elif data == 'tg_prem_main':
+        keyboard = [
+            [InlineKeyboardButton("🌟 Premium Gift (Global)", callback_data='tg.prem')],
+            [InlineKeyboardButton("🔙 Back", callback_data='shop_main')]
+        ]
+        await query.edit_message_text("Telegram Premium Plan ရွေးချယ်ပါ:", reply_markup=InlineKeyboardMarkup(keyboard))
 
     # (၃) ဈေးနှုန်းပြရန် (Steam US)
-    elif data == 'steam.us':
-        # PRICES ထဲက steam.us data တွေကို ယူမယ်
-        item_data = PRICES.get("steam.us", {})
+        # --- GENERIC PRICE HANDLER (ဒါထည့်လိုက်ရင် အကုန်ရပြီ) ---
+    elif data in PRICES:
+        category = PRICES[data]
         keyboard = []
-        # ဈေးနှုန်းခလုတ်တွေ တည်ဆောက်မယ်
-        for amt, price in item_data.get("items", {}).items():
-            # Button Data: buy|category|amount|price
-            callback_info = f"buy|steam.us|{amt}|{price}"
-            keyboard.append([InlineKeyboardButton(f"{amt} - {price}", callback_data=callback_info)])
+        for amount, price in category["items"].items():
+            # Button Data ပြင်ဆင်ခြင်း
+            callback_str = f"buy|{data}|{amount}|{price}"
+            keyboard.append([InlineKeyboardButton(f"{amount} - {price}", callback_data=callback_str)])
         
-        keyboard.append([InlineKeyboardButton("🔙 Back", callback_data='steam_main')])
-        await query.edit_message_text(f"Please select {item_data.get('text', 'Steam US')} amount:", reply_markup=InlineKeyboardMarkup(keyboard))
+        # Back Button အတွက် Logic
+        prefix = data.split('.')[0] 
+        back_callback = f"{prefix}_main"
+        keyboard.append([InlineKeyboardButton("🔙 Back", callback_data=back_callback)])
+              
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await query.edit_message_text(f"Please select {category['text']} amount:", reply_markup=reply_markup)
 
     # (၄) ဝယ်ယူမှု စတင်ရန် (Buying Process)
     elif data.startswith('buy|'):
