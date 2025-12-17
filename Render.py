@@ -1283,7 +1283,7 @@ async def menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
          # ဒီနေရာမှာ Point နှုတ်တဲ့ Logic တွေ လာထည့်လို့ရပါတယ်
 
 
-   if __name__ == '__main__':
+if __name__ == '__main__':
     # 👇 ၁။ ဒီကောင်ကို အရင်ဆုံး စ run ခိုင်းရပါမယ် (ဒါမှ Port ပွင့်မှာပါ)
     keep_alive()
     # post_init ကို ဒီနေရာမှာ ထည့်လိုက်ပါပြီ
