@@ -1284,8 +1284,8 @@ async def menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 if __name__ == '__main__':
-    # 👇 ၁။ ဒီကောင်ကို အရင်ဆုံး စ run ခိုင်းရပါမယ် (ဒါမှ Port ပွင့်မှာပါ)
-    keep_alive()
+    # 👇 ၁။ ဒီကောင်ကို အရင်ဆုံး စ run ခိုင်းရပါမယ် (ဒါမှ Port ပွင့်မှာပါ
+     keep_alive()
     # post_init ကို ဒီနေရာမှာ ထည့်လိုက်ပါပြီ
     application = ApplicationBuilder().token(TOKEN).post_init(post_init).build()
 
