@@ -10,7 +10,7 @@ from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, Callb
 # --- CONFIGURATION ---
 # Code ထဲမှာ တိုက်ရိုက်မရေးဘဲ Render Setting ထဲကနေ လှမ်းယူမယ်
 TOKEN = os.getenv('BOT_TOKEN') 
-MONGO_URI = os.getenv('MONGO_UR') 
+MONGO_URI = os.getenv('MONGO_URI') 
 ADMIN_ID = int(os.getenv('ADMIN_ID', '1953106131')) # Default ID ထည့်ထားလို့ရပါတယ်
 
 MONGO_DB_NAME = "giftcard_bot"
