@@ -1281,8 +1281,24 @@ async def menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif data == 'btn_use_all_points':
          await query.answer("Point စနစ် ပြုပြင်နေဆဲဖြစ်ပါသည်...", show_alert=True)
          # ဒီနေရာမှာ Point နှုတ်တဲ့ Logic တွေ လာထည့်လို့ရပါတယ်
+# --- RENDER KEEP ALIVE SECTION ---
+from flask import Flask
+from threading import Thread
 
+app = Flask('')
 
+@app.route('/')
+def home():
+    return "Bot is alive and running!"
+
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+
+ 
 if __name__ == '__main__':
     # 👇 ၁။ ဒီကောင်ကို အရင်ဆုံး စ run ခိုင်းရပါမယ် (ဒါမှ Port ပွင့်မှာပါ
      keep_alive()
